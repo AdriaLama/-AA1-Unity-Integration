@@ -37,7 +37,7 @@ public class Interact : MonoBehaviour
         { 
             WheelChair.SetActive(true);
             StartCoroutine(MoveChair());
-
+            sawWheelChair = true;
         }
 
     }
@@ -52,18 +52,16 @@ public class Interact : MonoBehaviour
 
     public IEnumerator MoveChair()
     {
-    
-        WheelChairSound.Play();
         yield return new WaitForSeconds(5f);
+        WheelChairSound.Play();
 
-        for (float i = 24; i < 19; i-=0.25f)
+        for (float i = 23; i > 19; i-= 0.1f)
         {
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(0.1f);
             WheelChair.transform.position = new Vector3(i, -3.81f, -18.718f);
 
         }
+        WheelChair.SetActive(false);
         Destroy(WheelChairSound);
-        sawWheelChair = true;
     }
-
 }
