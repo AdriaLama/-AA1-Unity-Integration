@@ -5,14 +5,16 @@ using UnityEngine;
 public class Interact : MonoBehaviour
 {
     public GameObject PressE;
-    public GameObject PC;
+    public GameObject Note;
+    public GameObject RedMessage;
     void Update()
     {
         if (Input.GetButtonDown("Interact"))
         {
             if (PressE.activeSelf)
             {
-                PC.SetActive(true);
+                Note.SetActive(true);
+                RedMessage.SetActive(true);
             }
         }
     }
