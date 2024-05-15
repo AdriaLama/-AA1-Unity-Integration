@@ -44,7 +44,7 @@ public class Interact : MonoBehaviour
 
     public IEnumerator QuitarNota()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
 
         Note.SetActive(false);
         Note2.SetActive(false);
@@ -52,7 +52,7 @@ public class Interact : MonoBehaviour
 
     public IEnumerator MoveChair()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(6f);
         WheelChairSound.Play();
 
         for (float i = 23; i > 19; i-= 0.1f)
