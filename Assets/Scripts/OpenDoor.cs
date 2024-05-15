@@ -7,6 +7,8 @@ using UnityEngine;
 public class OpenDoor : MonoBehaviour
 {
     public GameObject FirstDoor;
+    public GameObject DoorMorgue1;
+    public GameObject DoorMorgue2;
     public GameObject FirstWindow;
     public GameObject SecondDoor;
     public GameObject SecondWindow;
@@ -19,6 +21,8 @@ public class OpenDoor : MonoBehaviour
 
     private Quaternion initialRotationFirstDoor;
     private Quaternion initialRotationSecondDoor;
+    private Quaternion initialRotationDoorMorgue1;
+    private Quaternion initialRotationDoorMorgue2;
     private Quaternion initialRotationDoorBasement;
 
     private void Start()
@@ -26,6 +30,9 @@ public class OpenDoor : MonoBehaviour
         initialRotationFirstDoor = FirstDoor.transform.rotation;
         initialRotationSecondDoor = SecondDoor.transform.rotation;
         initialRotationDoorBasement = DoorBasement.transform.rotation;
+        initialRotationDoorMorgue1 = DoorMorgue1.transform.rotation;
+        initialRotationDoorMorgue2= DoorMorgue2.transform.rotation;
+        
     }
     private void OnTriggerEnter(Collider collision)
     {
@@ -41,6 +48,12 @@ public class OpenDoor : MonoBehaviour
         {
             StartCoroutine(AbrirPuerta());
         }
+        if (collision.gameObject.CompareTag("PuertaMorgue"))
+        {
+            DoorMorgue1.transform.rotation = initialRotationDoorMorgue1 * Quaternion.Euler(0, -80, 0);
+            DoorMorgue2.transform.rotation = initialRotationDoorMorgue2 * Quaternion.Euler(0, -80, 0);
+            openDoorSource.Play();
+        }
     }
     private void OnTriggerExit(Collider collision)
     {
@@ -50,6 +63,12 @@ public class OpenDoor : MonoBehaviour
             FirstWindow.SetActive(true);
             SecondDoor.transform.rotation = initialRotationSecondDoor;
             SecondWindow.SetActive(true);
+            closeDoorSource.Play();
+        }
+        if (collision.gameObject.CompareTag("PuertaMorgue"))
+        {
+            DoorMorgue1.transform.rotation = initialRotationDoorMorgue1;
+            DoorMorgue2.transform.rotation = initialRotationDoorMorgue2;
             closeDoorSource.Play();
         }
     }
