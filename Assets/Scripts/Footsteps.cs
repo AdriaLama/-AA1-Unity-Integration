@@ -8,7 +8,6 @@ public class Footsteps : MonoBehaviour
     public AudioClip[] footstepsOnWood;
 
     public string material;
-
     void PlayFootstepSound()
     {
         AudioSource myAudioSource = GetComponent<AudioSource>();

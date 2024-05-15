@@ -52,7 +52,7 @@ public class Interact : MonoBehaviour
 
     public IEnumerator MoveChair()
     {
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(5f);
         WheelChairSound.Play();
 
         for (float i = 23; i > 19; i-= 0.1f)

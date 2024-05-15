@@ -14,8 +14,10 @@ public class OpenDoor : MonoBehaviour
     public GameObject SecondWindow;
     public AudioSource openDoorSource;
     public AudioSource closeDoorSource;
-
+    public AudioSource doorSlam;
+    public AudioSource evilLaugh;
     public GameObject DoorBasement;
+    public GameObject DoorSlamColl;
     public AudioSource DoorSqueak;
 
 
@@ -34,8 +36,17 @@ public class OpenDoor : MonoBehaviour
         initialRotationDoorMorgue2= DoorMorgue2.transform.rotation;
         
     }
-    private void OnTriggerEnter(Collider collision)
+
+    private void Update()
     {
+      
+
+    }
+    
+    private void OnTriggerEnter(Collider collision)
+    {  
+        Interact sawIt = FindObjectOfType<Interact>();
+
         if (collision.gameObject.CompareTag("Puerta1"))
         {
             FirstDoor.transform.rotation = initialRotationFirstDoor * Quaternion.Euler(0, -80, 0);
@@ -53,6 +64,11 @@ public class OpenDoor : MonoBehaviour
             DoorMorgue1.transform.rotation = initialRotationDoorMorgue1 * Quaternion.Euler(0, -80, 0);
             DoorMorgue2.transform.rotation = initialRotationDoorMorgue2 * Quaternion.Euler(0, -80, 0);
             openDoorSource.Play();
+        }
+
+        if (collision.gameObject.CompareTag("Slam") && sawIt.sawWheelChair)
+        {
+            StartCoroutine(Portazo());
         }
     }
     private void OnTriggerExit(Collider collision)
@@ -84,6 +100,25 @@ public class OpenDoor : MonoBehaviour
                 DoorBasement.transform.rotation = initialRotationDoorBasement * Quaternion.Euler(0, -i, 0);
             }
             Destroy(DoorSqueak);
+        }
+    }
+
+    public IEnumerator Portazo()
+    {
+        initialRotationDoorBasement = DoorBasement.transform.rotation;
+        if (doorSlam != null)
+        {
+            doorSlam.Play();
+            for (int i = 125; i > 0; i--)
+            {
+                yield return new WaitForSeconds(0.008f);
+                DoorBasement.transform.rotation = initialRotationDoorBasement * Quaternion.Euler(0, i, 0);
+            }
+            Destroy(doorSlam);
+            Destroy(DoorSlamColl);
+            yield return new WaitForSeconds(2f);
+            evilLaugh.Play();
+
         }
     }
 }
